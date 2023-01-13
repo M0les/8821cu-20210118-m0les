@@ -86,12 +86,12 @@ then
 	exit 1
 fi
 
-# check to ensure nano is installed
-if ! command -v nano >/dev/null 2>&1
+# check to ensure ${EDITOR} is defined correctly
+if ! [ -x "${EDITOR}" ]
 then
-	echo "A required package is not installed."
-	echo "Please install the following package: nano"
-	echo "Once the package is installed, please run \"sudo ./${SCRIPT_NAME}\""
+	echo "The EDITOR variable is not defined or doesn't refer to an executable."
+	echo "Please set and export EDITOR to the path of your preferred text editor"
+	echo "Once set, please rerun \"sudo ./${SCRIPT_NAME}\""
 	exit 1
 fi
 
@@ -313,7 +313,7 @@ then
 	echo
 	if [[ $REPLY =~ ^[Yy]$ ]]
 	then
-		nano /etc/modprobe.d/${OPTIONS_FILE}
+		${EDITOR} /etc/modprobe.d/${OPTIONS_FILE}
 	fi
 
 	read -p "Do you want to reboot now? (recommended) [y/N] " -n 1 -r
