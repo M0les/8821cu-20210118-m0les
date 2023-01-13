@@ -20,7 +20,7 @@ then
 	exit 1
 fi
 
-nano /etc/modprobe.d/${OPTIONS_FILE}
+${EDITOR} /etc/modprobe.d/${OPTIONS_FILE}
 
 read -p "Do you want to apply the new options by rebooting now? [y/N] " -n 1 -r
 echo    # move to a new line
