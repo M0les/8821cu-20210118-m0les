@@ -86,13 +86,17 @@ then
 	exit 1
 fi
 
-# check to ensure ${EDITOR} is defined correctly
+# Check if ${EDITOR} is an executable or try to default to nano or finally complain if it's not installed.
 if ! [ -x "${EDITOR}" ]
 then
-	echo "The EDITOR variable is not defined or doesn't refer to an executable."
-	echo "Please set and export EDITOR to the path of your preferred text editor"
-	echo "Once set, please rerun \"sudo ./${SCRIPT_NAME}\""
-	exit 1
+	EDITOR="$(which nano 2>/dev/null)"
+	if ! [ -x "${EDITOR}" ]
+	then
+		echo "No text editor found (default: nano)."
+		echo "Please install one and set the EDITOR variable to point to it."
+		echo "When you have an editor, please run \"sudo ./${SCRIPT_NAME}\""
+		exit 1
+	fi
 fi
 
 # support for the NoPrompt option allows non-interactive use of this script
